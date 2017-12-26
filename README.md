@@ -22,7 +22,7 @@ library(igraph)
     ##     union
 
 ``` r
-ga.data <- read.csv('ga_edgelist.csv', header = T)
+ga.data <- read.csv('part1/ga_edgelist.csv', header = T)
 g <- graph.data.frame(ga.data,directed = F)
 plot(g)
 ```
@@ -306,20 +306,20 @@ tweetsDf <- twListToDF(tweets)
 summary(tweetsDf)
 ```
 
-    ##      text           favorited       favoriteCount  replyToSN        
-    ##  Length:200         Mode :logical   Min.   :0.0   Length:200        
-    ##  Class :character   FALSE:200       1st Qu.:0.0   Class :character  
-    ##  Mode  :character                   Median :0.0   Mode  :character  
-    ##                                     Mean   :0.1                     
-    ##                                     3rd Qu.:0.0                     
-    ##                                     Max.   :6.0                     
+    ##      text           favorited       favoriteCount    replyToSN        
+    ##  Length:200         Mode :logical   Min.   :0.000   Length:200        
+    ##  Class :character   FALSE:200       1st Qu.:0.000   Class :character  
+    ##  Mode  :character                   Median :0.000   Mode  :character  
+    ##                                     Mean   :0.085                     
+    ##                                     3rd Qu.:0.000                     
+    ##                                     Max.   :4.000                     
     ##     created                    truncated        replyToSID       
-    ##  Min.   :2017-12-26 01:48:55   Mode :logical   Length:200        
-    ##  1st Qu.:2017-12-26 01:50:23   FALSE:165       Class :character  
-    ##  Median :2017-12-26 01:51:58   TRUE :35        Mode  :character  
-    ##  Mean   :2017-12-26 01:52:24                                     
-    ##  3rd Qu.:2017-12-26 01:54:37                                     
-    ##  Max.   :2017-12-26 01:56:41                                     
+    ##  Min.   :2017-12-26 01:52:20   Mode :logical   Length:200        
+    ##  1st Qu.:2017-12-26 01:55:00   FALSE:163       Class :character  
+    ##  Median :2017-12-26 01:57:01   TRUE :37        Mode  :character  
+    ##  Mean   :2017-12-26 01:57:10                                     
+    ##  3rd Qu.:2017-12-26 01:59:48                                     
+    ##  Max.   :2017-12-26 02:01:14                                     
     ##       id             replyToUID        statusSource      
     ##  Length:200         Length:200         Length:200        
     ##  Class :character   Class :character   Class :character  
@@ -329,11 +329,11 @@ summary(tweetsDf)
     ##                                                          
     ##   screenName         retweetCount     isRetweet       retweeted      
     ##  Length:200         Min.   :   0.00   Mode :logical   Mode :logical  
-    ##  Class :character   1st Qu.:   0.00   FALSE:84        FALSE:200      
-    ##  Mode  :character   Median :   7.00   TRUE :116                      
-    ##                     Mean   :  71.28                                  
-    ##                     3rd Qu.:  95.00                                  
-    ##                     Max.   :1955.00                                  
+    ##  Class :character   1st Qu.:   0.00   FALSE:107       FALSE:200      
+    ##  Mode  :character   Median :   0.00   TRUE :93                       
+    ##                     Mean   :  69.61                                  
+    ##                     3rd Qu.:  30.25                                  
+    ##                     Max.   :1957.00                                  
     ##  longitude      latitude      
     ##  Mode:logical   Mode:logical  
     ##  NA's:200       NA's:200      
@@ -397,8 +397,8 @@ Create file from users1Edge and users2Edge and read the file to graph
 
 ``` r
 res <- cbind(from = users1Edge , to = users2Edge)
-write.csv(res , file = "tweets.csv" , row.names = FALSE)
-ga.data <- read.csv('tweets.csv', header = T)
+write.csv(res , file = "part2/tweets.csv" , row.names = FALSE)
+ga.data <- read.csv('part2/tweets.csv', header = T)
 g <- graph.data.frame(ga.data,directed = F)
 plot(g, vertex.size=7, vertex.label=NA, asp=FALSE)
 ```
@@ -417,8 +417,8 @@ between <- betweenness(g)
 between[which.max(between)]
 ```
 
-    ## BitcoinWrld 
-    ##           0
+    ## topfashionideas 
+    ##               0
 
 ### ii. By closeness
 
@@ -427,8 +427,8 @@ close <- closeness(g)
 close[which.max(close)]
 ```
 
-    ## CryptNotBlood 
-    ##  4.316671e-05
+    ##   abidoank12 
+    ## 3.555682e-05
 
 ### iii. By Eigenvector
 
@@ -437,8 +437,8 @@ eig <- eigen_centrality(g)
 eig$vector[which.max(eig$vector)]
 ```
 
-    ## NewsJunkieJon 
-    ##             1
+    ## Ragnarly 
+    ##        1
 
 ### 1.B
 
@@ -449,18 +449,18 @@ gc <- edge.betweenness.community(g)
 gc
 ```
 
-    ## IGRAPH clustering edge betweenness, groups: 12, mod: 0.88
+    ## IGRAPH clustering edge betweenness, groups: 12, mod: 0.89
     ## + groups:
     ##   $`1`
-    ##    [1] "BitcoinWrld"     "NeilOKeefe"      "djprincealby"   
-    ##    [4] "fakent_"         "TugBoatTrader"   "TrevorJ9257"    
-    ##    [7] "BuddySav"        "Noemie__Taylor"  "eztechwin"      
-    ##   [10] "Maeva__Davis"    "Oceane_Rodrigue" "Samuel___Smith" 
-    ##   [13] "EntrepreneurDon" "John_____Brown"  "Katie____Taylor"
-    ##   [16] "Perezreed5"      "ICOcheck"        "Karmicstar"     
+    ##    [1] "topfashionideas" "CryptoJauregui"  "Polite_Jerk"    
+    ##    [4] "BitcoinOps"      "khichariya1"     "darren_yan"     
+    ##    [7] "dodadopp"        "LudwigsenAngila" "sydni519"       
+    ##   [10] "socialprnews"    "RandallGoulding" "hitjo"          
+    ##   [13] "CryptoW0rld"    
     ##   
     ##   $`2`
-    ##    [1] "BrutallyDoke"    "bitcoinfirehose" "socialirnews"   
+    ##    [1] "EvaBlaisdell"   "eiyeorch"       "Torosernjacks"  "mvasey"        
+    ##    [5] "CogitoErgoCode" "TAHARARALAN"    "BTCticker"      "coinstats"     
     ##   + ... omitted several groups/vertices
 
 ``` r
@@ -468,88 +468,96 @@ memb <- membership(gc)
 memb
 ```
 
-    ##     BitcoinWrld    BrutallyDoke       paleodead        sydni519 
-    ##               1               2               3               4 
-    ## bitcoinfirehose   CryptNotBlood    socialprnews    socialirnews 
-    ##               2               5               4               2 
-    ## RandallGoulding       ssn3media socialstartnews       ssn1tweet 
-    ##               4               6               3               7 
-    ##   ssn4marketing       GetOvarIt 1JustinMcCollum     hotload2000 
-    ##               8               2               2               2 
-    ## MzCh11KiETHaNg9      KovshBeats       roni20731    Kayy_Kayy_44 
-    ##               6               6               9              10 
-    ##         ondhro1      UndersHead  TheSideHusband        goldseek 
-    ##              11              12              11               9 
-    ##        btcmrkts    realSatoshiN   egaconsulting   findingreview 
-    ##               9              10               5               5 
-    ##       davidar12         g0t3nk5      NeilOKeefe      37angelsny 
-    ##               9               3               1               8 
-    ##    King_Tuesday  hexagram_power         xbtnews   leola_joergen 
-    ##               6               5               6               9 
-    ##      KalEl_1987     Crystal0182      cryptomiao   MdKayumUddin2 
-    ##               2               5               5               3 
-    ##   BASSLINE_BOP2  CryptoNewswire    midousujikun      jekiedugn1 
-    ##              12               3               3               6 
-    ##      btc_update        matslats   TheBlockchain     OmegaLuther 
-    ##               2              12              11               9 
-    ##   VeryVeriViral eStream_Studios  eBargainsToday    bitcointonic 
-    ##               7               5               9              11 
+    ## topfashionideas    EvaBlaisdell  CryptoJauregui        eiyeorch 
+    ##               1               2               1               2 
+    ##   CryptoPrices_     cryptananda       Coinnnnn_        reubeng0 
+    ##               3               4               3               5 
+    ##       StreamIn_     Polite_Jerk   Torosernjacks     FeesBitcoin 
+    ##               6               1               2               5 
+    ##     Crypto_Newz  CryptoRidiculo      wavesprice       block_bit 
+    ##               4               6               7               8 
+    ##      abidoank12         vkeyxyz CityofInvestmnt      sabbir1133 
+    ##               9              10               9              11 
+    ##     whaleclubco HarrietteFarkas          mvasey     rottenwheel 
+    ##               6               8               2               4 
+    ## strange10change  CogitoErgoCode        BtcPulse TommyeKirkendal 
+    ##               9               2               5               8 
+    ##    coinradar_io     TAHARARALAN dc77ae00b817435       chrisleu2 
+    ##               9               2               7              10 
+    ##      BitcoinOps     Cryptonic17  BitcoinSpreads       BTCticker 
+    ##               1               8               6               2 
+    ##      btcreports          betbtc     crypto_rush    TheeJimmyCox 
+    ##               8               5               8               8 
+    ##     CryptoSeven BitcoinKacDolar       coinstats UnconfirmedTxns 
+    ##               9              11               2               8 
+    ##    BTCdominance  digitaljournal        Anon_Emy  TboneMacdonald 
+    ##               6               7              10               5 
+    ##         Chey999        bitstein    antoni161273        Bitmoeda 
+    ##               9              10               5               2 
+    ##    steveouttrim        Ragnarly     khichariya1  CHP_the_RIPPER 
+    ##              10               9               1               5 
+    ##       latigo661        GlencieR  Crypto_Monkeyo Nationalacrobat 
+    ##               6              12               8               9 
+    ##      blkchdemcy      btcbeehive     Bitcoin_UAE   BitcoinUkNews 
+    ##               7               5               8               3 
+    ##     miamipeoria  CryptoStacking  tommyalvarez81     jmvillegast 
+    ##               5               9               7               2 
+    ## CarlaCoinsNLegs         tigzorr         adam3us  bitcoin_miner_ 
+    ##               5               4               5               9 
+    ##  ibrahimsilence      ESellhamer MIParentalRlght    henrynburton 
+    ##               3               6               5               7 
+    ##        mktm9871      darren_yan  bitcoinnewsweb  juliarahma1995 
+    ##              12               1               8              12 
+    ##   blockchainbot    maestrejoseg BitcoinInvest24    Soc_Currency 
+    ##               5               5               6               8 
+    ## socialstocksnow    iam_rahul555    PatPrivilege        dodadopp 
+    ##               7              11              11               1 
+    ##          s_H4k4 LudwigsenAngila    eprocentteam    bitcointonic 
+    ##              11               1              10               8 
+    ##       socmrktng  socialstartnow    nowsocialinc socialnewstweet 
+    ##               6               9              12               8 
+    ##     getitoutnow  socmediaimpact       Just_JUNO     FTS_Billing 
+    ##              11               8               8              12 
+    ##   Kandy_LOVE_94  politicalHEDGE jeffvillalobos3         RTrobby 
+    ##               9              12               6               9 
+    ##        steemero     BitcoinWrld    BrutallyDoke       paleodead 
+    ##              11              10               9               3 
+    ##        sydni519 bitcoinfirehose   CryptNotBlood    socialprnews 
+    ##               1               9               6               1 
+    ##    socialirnews RandallGoulding       ssn3media socialstartnews 
+    ##               9               1               4               3 
+    ##       ssn1tweet   ssn4marketing       GetOvarIt 1JustinMcCollum 
+    ##               7              11               9               9 
+    ##     hotload2000 MzCh11KiETHaNg9      KovshBeats       roni20731 
+    ##               9               4               4              12 
+    ##    Kayy_Kayy_44         ondhro1      UndersHead  TheSideHusband 
+    ##               5               8               2               8 
+    ##        goldseek        btcmrkts    realSatoshiN   egaconsulting 
+    ##              12              12               5               6 
+    ##   findingreview       davidar12         g0t3nk5      NeilOKeefe 
+    ##               6              12               3              10 
+    ##      37angelsny    King_Tuesday  hexagram_power         xbtnews 
+    ##              11               4               6               4 
+    ##   leola_joergen      KalEl_1987     Crystal0182      cryptomiao 
+    ##              12               9               6               6 
+    ##   MdKayumUddin2   BASSLINE_BOP2  CryptoNewswire    midousujikun 
+    ##               3               2               3               3 
+    ##      jekiedugn1      btc_update        matslats   TheBlockchain 
+    ##               4               9               2               8 
+    ##     OmegaLuther   VeryVeriViral eStream_Studios  eBargainsToday 
+    ##              12               7               6              12 
     ##     TheBitForum        NazzyN21   MikeAlden2012        DMVLife1 
-    ##               8               8               2               8 
+    ##              11              11               9              11 
     ##   mempool_stats   Buddhamangler           hitjo    djprincealby 
-    ##              10              12               4               1 
+    ##               5               2               1              10 
     ##         fakent_   TugBoatTrader     CryptoW0rld      CA_Minho25 
-    ##               1               1               4               5 
+    ##              10              10               1               6 
     ##   shushmashri21      markuspdee      JacekSalaj     tell_taylor 
-    ##               5               9              10               8 
-    ##     Priya_upala      MattLeft99    theonevortex  politicalHEDGE 
-    ##               5              12               6               9 
-    ##     CryptoKid77   blockchainbot  BitcoinCashApp michael55038689 
-    ##              10              10              10               5 
-    ##      McclamNeva    iBroughtFood      buzzkil420    JulioSilvaJr 
-    ##               6               5               5              12 
-    ##    JessVerSteeg     TrevorJ9257   India_Bitcoin        ivivekkm 
-    ##              11               1               2               9 
-    ##    CryptoSykora      jasongaved   NewsJunkieJon        BuddySav 
-    ##               3               6              12               1 
-    ##       ccrypto27          j4f288     bitcoinID69       samdaurua 
-    ##               5              11               9              12 
-    ##     handsomegui    Bakerlewis85  galdinus_gomes         rh13478 
-    ##               5               2               7              10 
-    ##  Noemie__Taylor  Digitally_Your FanChicagoBears        CryptoFP 
-    ##               1               4               4               5 
-    ##      Alice44567       EmGeetwit       eztechwin    E_Pluribus_1 
-    ##               3               9               1              12 
-    ##    Maeva__Davis     Allenlee585 Oceane_Rodrigue      AdamSilva3 
-    ##               1               2               1               5 
-    ##      cryptofuse   RobertaCushey  Samuel___Smith      SaeedBaygi 
-    ##              10               4               1               4 
-    ##     RosyDecosta EntrepreneurDon  John_____Brown        wharveyc 
-    ##               3               1               1               6 
-    ## Katie____Taylor        al_dia17    AlicePaul_CA    TheMedlockss 
-    ##               1               8               3               9 
-    ##      Perezreed5   rgkrobertwill     JohannNelZI   DavidMackey77 
-    ##               1              12               2               4 
-    ##       NYCPunter         veht290          JWake5 pWielandTrading 
-    ##               2               5               7              12 
-    ##   MotherOfMoney    kevinchenNYC         mabling        ICOcheck 
-    ##               3               4              12               1 
-    ##    city_bitcoin      Karmicstar        mapiasal Thuyngu22268437 
-    ##               8               1              10               5 
-    ##         all3els        fibrolit         StatXbt    Dry_Observer 
-    ##              10               2               6               2 
-    ##     RightRiseUK       TelThomas  JenniferAlsop7    JacobGrant31 
-    ##               9              12              12              12 
-    ## BellaRoberts181    StackmyBCHup  Carlos05247004     fxolivia_sh 
-    ##              12               4               5              10 
-    ##     patrickford    frank_darsey      SamKelly63    Bitcoin_Post 
-    ##              12               8              12              12 
-    ##        rootdude  Mark_Lewis_NYC  socmediaimpact     getitoutnow 
-    ##              12               4              11               8 
-    ## socialnewstweet       socmrktng    nowsocialinc  socialstartnow 
-    ##              11               5               9               2 
-    ##        bob32423  StevenDavidso3   Toyota__Yaris 
-    ##               9              12               8
+    ##               6              12               5              11 
+    ##     Priya_upala      MattLeft99    theonevortex     CryptoKid77 
+    ##               6               2               4               5 
+    ##  BitcoinCashApp michael55038689      McclamNeva 
+    ##               5               6               4
 
 Plot the graph with unique color for each community accordingly
 
@@ -577,18 +585,18 @@ t
 ```
 
     ##    ID Size
-    ## 1   1   18
-    ## 2   2   17
-    ## 3   3   11
-    ## 4   4   13
-    ## 5   5   21
-    ## 6   6   11
-    ## 7   7    4
-    ## 8   8   11
-    ## 9   9   16
-    ## 10 10   12
-    ## 11 11    8
-    ## 12 12   21
+    ## 1   1   13
+    ## 2   2   15
+    ## 3   3   10
+    ## 4   4   12
+    ## 5   5   20
+    ## 6   6   21
+    ## 7   7    9
+    ## 8   8   19
+    ## 9   9   22
+    ## 10 10   11
+    ## 11 11   13
+    ## 12 12   14
 
 The modularity
 
@@ -596,37 +604,40 @@ The modularity
 gc$modularity
 ```
 
-    ##   [1] -6.735300e-03 -5.963960e-03 -5.147119e-03 -4.311713e-03 -3.604075e-03
-    ##   [6] -2.188800e-03 -6.588603e-05  1.567796e-03  4.398348e-03  5.105986e-03
-    ##  [11]  5.906810e-03  9.444999e-03  1.369083e-02  1.864429e-02  2.430539e-02
-    ##  [16]  2.584807e-02  2.660813e-02  2.812824e-02  2.893744e-02  3.035271e-02
-    ##  [21]  3.197111e-02  3.442163e-02  3.516967e-02  4.153841e-02  4.314006e-02
-    ##  [26]  5.021644e-02  5.233935e-02  5.461952e-02  5.702200e-02  6.006222e-02
-    ##  [31]  6.784623e-02  6.934232e-02  7.165634e-02  7.247318e-02  7.574054e-02
-    ##  [36]  7.798467e-02  7.880151e-02  8.179369e-02  8.553390e-02  8.716758e-02
-    ##  [41]  9.037088e-02  9.485914e-02  9.886327e-02  1.012909e-01  1.041214e-01
-    ##  [46]  1.093577e-01  1.131580e-01  1.191423e-01  1.276340e-01  1.343664e-01
-    ##  [51]  1.374517e-01  1.399023e-01  1.434404e-01  1.482454e-01  1.538512e-01
-    ##  [56]  1.613316e-01  1.645684e-01  1.654184e-01  1.699787e-01  1.742245e-01
-    ##  [61]  1.834238e-01  1.872805e-01  1.889513e-01  1.939048e-01  2.021333e-01
-    ##  [66]  2.120402e-01  2.136739e-01  2.169412e-01  2.215693e-01  2.268897e-01
-    ##  [71]  2.358662e-01  2.383724e-01  2.489870e-01  2.546481e-01  2.610168e-01
-    ##  [76]  2.634673e-01  2.705437e-01  2.745897e-01  2.794449e-01  2.851092e-01
-    ##  [81]  2.905086e-01  2.937760e-01  3.050982e-01  3.128822e-01  3.169664e-01
-    ##  [86]  3.234400e-01  3.296107e-01  3.381024e-01  3.473017e-01  3.537083e-01
-    ##  [91]  3.634328e-01  3.739054e-01  3.851261e-01  3.923335e-01  4.043633e-01
-    ##  [96]  4.116461e-01  4.165471e-01  4.226276e-01  4.283455e-01  4.348802e-01
-    ## [101]  4.382218e-01  4.451639e-01  4.550708e-01  4.567708e-01  4.644842e-01
-    ## [106]  4.686612e-01  4.813987e-01  4.882392e-01  4.923234e-01  4.964076e-01
-    ## [111]  5.013086e-01  5.147537e-01  5.204716e-01  5.310862e-01  5.424084e-01
-    ## [116]  5.500090e-01  5.584937e-01  5.633947e-01  5.754246e-01  5.811425e-01
-    ## [121]  5.884940e-01  6.004627e-01  6.069975e-01  6.162535e-01  6.289910e-01
-    ## [126]  6.424361e-01  6.505281e-01  6.605555e-01  6.713543e-01  6.763667e-01
-    ## [131]  6.905195e-01  6.963673e-01  7.052685e-01  7.168386e-01  7.233733e-01
-    ## [136]  7.307249e-01  7.390855e-01  7.482062e-01  7.580869e-01  7.662553e-01
-    ## [141]  7.688052e-01  7.761568e-01  7.843252e-01  7.923334e-01  8.029742e-01
-    ## [146]  8.117833e-01  8.259360e-01  8.373369e-01  8.469467e-01  8.551152e-01
-    ## [151]  8.672760e-01  8.799928e-01
+    ##   [1] -0.006045729 -0.005406431 -0.004701871 -0.004073179 -0.002794583
+    ##   [6] -0.001537197  0.000348881  0.001059152  0.002479693  0.003177998
+    ##  [11]  0.003862164  0.005780058  0.006478363  0.007874975  0.009969892
+    ##  [16]  0.010661400  0.013176171  0.014559186  0.015927518  0.016545061
+    ##  [21]  0.017954182  0.018669619  0.020722116  0.022152990  0.025296454
+    ##  [26]  0.029068610  0.030303698  0.032378221  0.034491901  0.038892750
+    ##  [31]  0.041710991  0.044504214  0.046635025  0.048781337  0.051547367
+    ##  [36]  0.056576909  0.062235144  0.064792336  0.068249874  0.072398920
+    ##  [41]  0.073048279  0.075784941  0.077083660  0.080280149  0.085120702
+    ##  [46]  0.088643503  0.092870863  0.094723495  0.097193670  0.100281389
+    ##  [51]  0.103772918  0.104492978  0.107354726  0.112286647  0.113683258
+    ##  [56]  0.117388521  0.119483439  0.125770366  0.130093173  0.132886396
+    ##  [61]  0.136463582  0.141403932  0.144245014  0.148434849  0.153992743
+    ##  [66]  0.160908363  0.166440424  0.172615862  0.178839431  0.180787508
+    ##  [71]  0.183384945  0.188273085  0.191519881  0.198434957  0.205227939
+    ##  [76]  0.212772252  0.216668407  0.220219760  0.223711289  0.229297735
+    ##  [81]  0.233487570  0.239772322  0.246755380  0.248195500  0.252741013
+    ##  [86]  0.260914019  0.264749806  0.269224891  0.276831476  0.282026349
+    ##  [91]  0.286914489  0.295212581  0.297372760  0.302487143  0.311288842
+    ##  [96]  0.315581465  0.322991990  0.328745671  0.334382152  0.340775130
+    ## [101]  0.344195959  0.347076198  0.355104267  0.362136544  0.367144604
+    ## [106]  0.372988836  0.380660410  0.384260710  0.392906323  0.399399914
+    ## [111]  0.408389513  0.417819905  0.426130777  0.431717223  0.440980380
+    ## [116]  0.445242003  0.449346997  0.458297167  0.463269061  0.473149762
+    ## [121]  0.482739230  0.488421394  0.492741753  0.502800837  0.509943787
+    ## [126]  0.514732947  0.522414311  0.532912555  0.540704865  0.549146533
+    ## [131]  0.559375299  0.568466327  0.573939652  0.584627429  0.594367816
+    ## [136]  0.600652568  0.607045003  0.612085422  0.618242913  0.629358701
+    ## [141]  0.639748447  0.650616510  0.657458167  0.669191499  0.675532540
+    ## [146]  0.683058362  0.694097467  0.705413937  0.713793606  0.726144482
+    ## [151]  0.733247187  0.746215607  0.757904071  0.763664550  0.775609712
+    ## [156]  0.782655313  0.794162675  0.802372663  0.809355720  0.821929576
+    ## [161]  0.834076235  0.839799732  0.847549893  0.853988827  0.862882980
+    ## [166]  0.870564344  0.880142663  0.888522333
 
 ### walktrap community
 
@@ -635,18 +646,18 @@ gc1 <- walktrap.community(g)
 gc1
 ```
 
-    ## IGRAPH clustering walktrap, groups: 12, mod: 0.88
+    ## IGRAPH clustering walktrap, groups: 12, mod: 0.89
     ## + groups:
     ##   $`1`
-    ##   [1] "ssn1tweet"      "VeryVeriViral"  "galdinus_gomes" "JWake5"        
+    ##   [1] "wavesprice"      "dc77ae00b817435" "digitaljournal" 
+    ##   [4] "blkchdemcy"      "tommyalvarez81"  "henrynburton"   
+    ##   [7] "socialstocksnow" "ssn1tweet"       "VeryVeriViral"  
     ##   
     ##   $`2`
-    ##   [1] "ondhro1"         "TheSideHusband"  "TheBlockchain"  
-    ##   [4] "bitcointonic"    "JessVerSteeg"    "j4f288"         
-    ##   [7] "socmediaimpact"  "socialnewstweet"
-    ##   
-    ##   $`3`
-    ##    [1] "ssn4marketing" "37angelsny"    "TheBitForum"   "NazzyN21"     
+    ##    [1] "CryptoPrices_"   "Coinnnnn_"       "BitcoinUkNews"  
+    ##    [4] "ibrahimsilence"  "paleodead"       "socialstartnews"
+    ##    [7] "g0t3nk5"         "MdKayumUddin2"   "CryptoNewswire" 
+    ##   [10] "midousujikun"   
     ##   + ... omitted several groups/vertices
 
 ``` r
@@ -654,88 +665,96 @@ memb1 <- membership(gc1)
 memb1
 ```
 
-    ##     BitcoinWrld    BrutallyDoke       paleodead        sydni519 
-    ##              10               9               4               7 
-    ## bitcoinfirehose   CryptNotBlood    socialprnews    socialirnews 
-    ##               9              12               7               9 
-    ## RandallGoulding       ssn3media socialstartnews       ssn1tweet 
-    ##               7               5               4               1 
-    ##   ssn4marketing       GetOvarIt 1JustinMcCollum     hotload2000 
-    ##               3               9               9               9 
-    ## MzCh11KiETHaNg9      KovshBeats       roni20731    Kayy_Kayy_44 
-    ##               5               5               8               6 
-    ##         ondhro1      UndersHead  TheSideHusband        goldseek 
-    ##               2              11               2               8 
-    ##        btcmrkts    realSatoshiN   egaconsulting   findingreview 
-    ##               8               6              12              12 
-    ##       davidar12         g0t3nk5      NeilOKeefe      37angelsny 
-    ##               8               4              10               3 
-    ##    King_Tuesday  hexagram_power         xbtnews   leola_joergen 
-    ##               5              12               5               8 
-    ##      KalEl_1987     Crystal0182      cryptomiao   MdKayumUddin2 
-    ##               9              12              12               4 
-    ##   BASSLINE_BOP2  CryptoNewswire    midousujikun      jekiedugn1 
-    ##              11               4               4               5 
-    ##      btc_update        matslats   TheBlockchain     OmegaLuther 
-    ##               9              11               2               8 
-    ##   VeryVeriViral eStream_Studios  eBargainsToday    bitcointonic 
-    ##               1              12               8               2 
-    ##     TheBitForum        NazzyN21   MikeAlden2012        DMVLife1 
-    ##               3               3               9               3 
-    ##   mempool_stats   Buddhamangler           hitjo    djprincealby 
-    ##               6              11               7              10 
-    ##         fakent_   TugBoatTrader     CryptoW0rld      CA_Minho25 
-    ##              10              10               7              12 
-    ##   shushmashri21      markuspdee      JacekSalaj     tell_taylor 
-    ##              12               8               6               3 
-    ##     Priya_upala      MattLeft99    theonevortex  politicalHEDGE 
-    ##              12              11               5               8 
-    ##     CryptoKid77   blockchainbot  BitcoinCashApp michael55038689 
-    ##               6               6               6              12 
-    ##      McclamNeva    iBroughtFood      buzzkil420    JulioSilvaJr 
-    ##               5              12              12              11 
-    ##    JessVerSteeg     TrevorJ9257   India_Bitcoin        ivivekkm 
-    ##               2              10               9               8 
-    ##    CryptoSykora      jasongaved   NewsJunkieJon        BuddySav 
-    ##               4               5              11              10 
-    ##       ccrypto27          j4f288     bitcoinID69       samdaurua 
-    ##              12               2               8              11 
-    ##     handsomegui    Bakerlewis85  galdinus_gomes         rh13478 
-    ##              12               9               1               6 
-    ##  Noemie__Taylor  Digitally_Your FanChicagoBears        CryptoFP 
-    ##              10               7               7              12 
-    ##      Alice44567       EmGeetwit       eztechwin    E_Pluribus_1 
-    ##               4               8              10              11 
-    ##    Maeva__Davis     Allenlee585 Oceane_Rodrigue      AdamSilva3 
-    ##              10               9              10              12 
-    ##      cryptofuse   RobertaCushey  Samuel___Smith      SaeedBaygi 
-    ##               6               7              10               7 
-    ##     RosyDecosta EntrepreneurDon  John_____Brown        wharveyc 
-    ##               4              10              10               5 
-    ## Katie____Taylor        al_dia17    AlicePaul_CA    TheMedlockss 
-    ##              10               3               4               8 
-    ##      Perezreed5   rgkrobertwill     JohannNelZI   DavidMackey77 
-    ##              10              11               9               7 
-    ##       NYCPunter         veht290          JWake5 pWielandTrading 
-    ##               9              12               1              11 
-    ##   MotherOfMoney    kevinchenNYC         mabling        ICOcheck 
-    ##               4               7              11              10 
-    ##    city_bitcoin      Karmicstar        mapiasal Thuyngu22268437 
-    ##               3              10               6              12 
-    ##         all3els        fibrolit         StatXbt    Dry_Observer 
-    ##               6               9               5               9 
-    ##     RightRiseUK       TelThomas  JenniferAlsop7    JacobGrant31 
-    ##               8              11              11              11 
-    ## BellaRoberts181    StackmyBCHup  Carlos05247004     fxolivia_sh 
-    ##              11               7              12               6 
-    ##     patrickford    frank_darsey      SamKelly63    Bitcoin_Post 
-    ##              11               3              11              11 
-    ##        rootdude  Mark_Lewis_NYC  socmediaimpact     getitoutnow 
+    ## topfashionideas    EvaBlaisdell  CryptoJauregui        eiyeorch 
+    ##               5               8               5               8 
+    ##   CryptoPrices_     cryptananda       Coinnnnn_        reubeng0 
+    ##               2               4               2              10 
+    ##       StreamIn_     Polite_Jerk   Torosernjacks     FeesBitcoin 
+    ##              11               5               8              10 
+    ##     Crypto_Newz  CryptoRidiculo      wavesprice       block_bit 
+    ##               4              11               1               9 
+    ##      abidoank12         vkeyxyz CityofInvestmnt      sabbir1133 
+    ##              12               3              12               6 
+    ##     whaleclubco HarrietteFarkas          mvasey     rottenwheel 
+    ##              11               9               8               4 
+    ## strange10change  CogitoErgoCode        BtcPulse TommyeKirkendal 
+    ##              12               8              10               9 
+    ##    coinradar_io     TAHARARALAN dc77ae00b817435       chrisleu2 
+    ##              12               8               1               3 
+    ##      BitcoinOps     Cryptonic17  BitcoinSpreads       BTCticker 
+    ##               5               9              11               8 
+    ##      btcreports          betbtc     crypto_rush    TheeJimmyCox 
+    ##               9              10               9               9 
+    ##     CryptoSeven BitcoinKacDolar       coinstats UnconfirmedTxns 
+    ##              12               6               8               9 
+    ##    BTCdominance  digitaljournal        Anon_Emy  TboneMacdonald 
+    ##              11               1               3              10 
+    ##         Chey999        bitstein    antoni161273        Bitmoeda 
+    ##              12               3              10               8 
+    ##    steveouttrim        Ragnarly     khichariya1  CHP_the_RIPPER 
+    ##               3              12               5              10 
+    ##       latigo661        GlencieR  Crypto_Monkeyo Nationalacrobat 
+    ##              11               7               9              12 
+    ##      blkchdemcy      btcbeehive     Bitcoin_UAE   BitcoinUkNews 
+    ##               1              10               9               2 
+    ##     miamipeoria  CryptoStacking  tommyalvarez81     jmvillegast 
+    ##              10              12               1               8 
+    ## CarlaCoinsNLegs         tigzorr         adam3us  bitcoin_miner_ 
+    ##              10               4              10              12 
+    ##  ibrahimsilence      ESellhamer MIParentalRlght    henrynburton 
+    ##               2              11              10               1 
+    ##        mktm9871      darren_yan  bitcoinnewsweb  juliarahma1995 
+    ##               7               5               9               7 
+    ##   blockchainbot    maestrejoseg BitcoinInvest24    Soc_Currency 
+    ##              10              10              11               9 
+    ## socialstocksnow    iam_rahul555    PatPrivilege        dodadopp 
+    ##               1               6               6               5 
+    ##          s_H4k4 LudwigsenAngila    eprocentteam    bitcointonic 
+    ##               6               5               3               9 
+    ##       socmrktng  socialstartnow    nowsocialinc socialnewstweet 
+    ##              11              12               7               9 
+    ##     getitoutnow  socmediaimpact       Just_JUNO     FTS_Billing 
+    ##               6               9               9               7 
+    ##   Kandy_LOVE_94  politicalHEDGE jeffvillalobos3         RTrobby 
+    ##              12               7              11              12 
+    ##        steemero     BitcoinWrld    BrutallyDoke       paleodead 
+    ##               6               3              12               2 
+    ##        sydni519 bitcoinfirehose   CryptNotBlood    socialprnews 
+    ##               5              12              11               5 
+    ##    socialirnews RandallGoulding       ssn3media socialstartnews 
+    ##              12               5               4               2 
+    ##       ssn1tweet   ssn4marketing       GetOvarIt 1JustinMcCollum 
+    ##               1               6              12              12 
+    ##     hotload2000 MzCh11KiETHaNg9      KovshBeats       roni20731 
+    ##              12               4               4               7 
+    ##    Kayy_Kayy_44         ondhro1      UndersHead  TheSideHusband 
+    ##              10               9               8               9 
+    ##        goldseek        btcmrkts    realSatoshiN   egaconsulting 
+    ##               7               7              10              11 
+    ##   findingreview       davidar12         g0t3nk5      NeilOKeefe 
     ##              11               7               2               3 
-    ## socialnewstweet       socmrktng    nowsocialinc  socialstartnow 
-    ##               2              12               8               9 
-    ##        bob32423  StevenDavidso3   Toyota__Yaris 
-    ##               8              11               3
+    ##      37angelsny    King_Tuesday  hexagram_power         xbtnews 
+    ##               6               4              11               4 
+    ##   leola_joergen      KalEl_1987     Crystal0182      cryptomiao 
+    ##               7              12              11              11 
+    ##   MdKayumUddin2   BASSLINE_BOP2  CryptoNewswire    midousujikun 
+    ##               2               8               2               2 
+    ##      jekiedugn1      btc_update        matslats   TheBlockchain 
+    ##               4              12               8               9 
+    ##     OmegaLuther   VeryVeriViral eStream_Studios  eBargainsToday 
+    ##               7               1              11               7 
+    ##     TheBitForum        NazzyN21   MikeAlden2012        DMVLife1 
+    ##               6               6              12               6 
+    ##   mempool_stats   Buddhamangler           hitjo    djprincealby 
+    ##              10               8               5               3 
+    ##         fakent_   TugBoatTrader     CryptoW0rld      CA_Minho25 
+    ##               3               3               5              11 
+    ##   shushmashri21      markuspdee      JacekSalaj     tell_taylor 
+    ##              11               7              10               6 
+    ##     Priya_upala      MattLeft99    theonevortex     CryptoKid77 
+    ##              11               8               4              10 
+    ##  BitcoinCashApp michael55038689      McclamNeva 
+    ##              10              11               4
 
 Plot the graph with unique color for each community accordingly
 
@@ -763,18 +782,18 @@ t1
 ```
 
     ##    ID Size
-    ## 1   1    4
-    ## 2   2    8
+    ## 1   1    9
+    ## 2   2   10
     ## 3   3   11
-    ## 4   4   11
-    ## 5   5   11
-    ## 6   6   12
-    ## 7   7   13
-    ## 8   8   16
-    ## 9   9   17
-    ## 10 10   18
+    ## 4   4   12
+    ## 5   5   13
+    ## 6   6   13
+    ## 7   7   14
+    ## 8   8   15
+    ## 9   9   19
+    ## 10 10   20
     ## 11 11   21
-    ## 12 12   21
+    ## 12 12   22
 
 The modularity
 
@@ -782,36 +801,39 @@ The modularity
 gc1$modularity
 ```
 
-    ##   [1]  0.0000000000 -0.0060276650 -0.0053200270 -0.0039047510 -0.0031971128
-    ##   [6] -0.0017818369  0.0003410764  0.0017563524  0.0038792663  0.0123709198
-    ##  [11]  0.0152014717  0.0159091093  0.0166167468  0.0173243843  0.0244007632
-    ##  [16]  0.0258160383  0.0272313133  0.0321847796  0.0371382460  0.0378458872
-    ##  [21]  0.0385535248  0.0392611623  0.0399688035  0.0406764448  0.0413840786
-    ##  [26]  0.0427993573  0.0442146286  0.0456298999  0.0470451787  0.0491680913
-    ##  [31]  0.0512910075  0.0541215576  0.0569521040  0.0739354044  0.0909187198
-    ##  [36]  0.1064867526  0.1220547855  0.1496526599  0.1772505343  0.2338615507
-    ##  [41]  0.2904725671  0.2912206054  0.2919686437  0.2934647501  0.2949608564
-    ##  [46]  0.2957088947  0.2964569330  0.2972049713  0.3016932309  0.3061814904
-    ##  [51]  0.3076775670  0.3263786435  0.3286227882  0.3293707967  0.3592925072
-    ##  [56]  0.3607886136  0.3630327284  0.4049231708  0.4056832194  0.4064432681
-    ##  [61]  0.4094835222  0.4102435708  0.4110035896  0.4125237167  0.4148039222
-    ##  [66]  0.4178440869  0.4208843112  0.4246846139  0.4284848869  0.4330452085
-    ##  [71]  0.4376055598  0.4429259300  0.4550868273  0.5082907081  0.5090621114
-    ##  [76]  0.5098334551  0.5106047988  0.5121474266  0.5129187703  0.5175467730
-    ##  [81]  0.5206320882  0.5360589027  0.5430010557  0.5507143736  0.5591991544
-    ##  [86]  0.5684551597  0.5692265034  0.5707692504  0.6008514762  0.6016523242
-    ##  [91]  0.6024530530  0.6032539010  0.6048555970  0.6096605659  0.6176688075
-    ##  [96]  0.6184696555  0.6192703843  0.6208720803  0.6256770492  0.6537058949
-    ## [101]  0.6633157730  0.6641249657  0.6657433510  0.6665526032  0.6673617363
-    ## [106]  0.6681709886  0.6705985665  0.6722169518  0.6786904931  0.6811181307
-    ## [111]  0.6908285022  0.7167227864  0.7175396085  0.7183565497  0.7191733718
-    ## [116]  0.7199901938  0.7208071351  0.7216239572  0.7232576609  0.7265250087
-    ## [121]  0.7273418307  0.7306091785  0.7330597639  0.7338765860  0.7355102897
-    ## [126]  0.7371439338  0.7387775779  0.7420449257  0.7453122139  0.7485795021
-    ## [131]  0.7608321309  0.7730847597  0.7853373885  0.7861542702  0.7869711518
-    ## [136]  0.7877879739  0.7894216776  0.7910553813  0.7926889658  0.8122931719
-    ## [141]  0.8318973780  0.8515015841  0.8523370624  0.8531724811  0.8565140367
-    ## [146]  0.8573494554  0.8640326858  0.8690451384  0.8748930097  0.8757429123
-    ## [151]  0.8765929341  0.8799927831  0.0000000000  0.0000000000  0.0000000000
-    ## [156]  0.0000000000  0.0000000000  0.0000000000  0.0000000000  0.0000000000
-    ## [161]  0.0000000000  0.0000000000  0.0000000000
+    ##   [1]  0.000000000 -0.005428182 -0.004810639 -0.004193096 -0.002958009
+    ##   [6] -0.002340465 -0.001722922  0.001982341  0.003217428  0.005687603
+    ##  [11]  0.008775322  0.016185848  0.042122684  0.042740226  0.043357771
+    ##  [16]  0.043975312  0.045210402  0.046445489  0.048298120  0.052003384
+    ##  [21]  0.064354256  0.136606887  0.137235567  0.137864262  0.138492942
+    ##  [26]  0.139750332  0.142265111  0.142893806  0.150438130  0.151695505
+    ##  [31]  0.156096354  0.156725034  0.157353729  0.157982409  0.159239799
+    ##  [36]  0.160497189  0.162383273  0.164898038  0.179986671  0.193817914
+    ##  [41]  0.218336940  0.268632352  0.269271642  0.269910932  0.270550221
+    ##  [46]  0.271189511  0.271828800  0.272468090  0.275025308  0.276303917
+    ##  [51]  0.281418324  0.285254121  0.292925686  0.318497598  0.326808482
+    ##  [56]  0.335758656  0.345348120  0.355576873  0.366444945  0.377952278
+    ##  [61]  0.390098989  0.390748352  0.391397715  0.392047077  0.392696440
+    ##  [66]  0.393995166  0.394644529  0.395943224  0.396592617  0.397241980
+    ##  [71]  0.401138127  0.402436823  0.403735518  0.413475901  0.417372048
+    ##  [76]  0.427761793  0.437502176  0.489450932  0.501139402  0.501823545
+    ##  [81]  0.503191888  0.505244374  0.507981002  0.511401892  0.512086034
+    ##  [86]  0.512770176  0.513454318  0.514138460  0.515506804  0.518243492
+    ##  [91]  0.522348464  0.536031783  0.572976768  0.573668301  0.574359834
+    ##  [96]  0.575051367  0.575742900  0.577125907  0.579891860  0.581274807
+    ## [101]  0.587498426  0.604094625  0.611009717  0.618616283  0.626914382
+    ## [106]  0.635903955  0.636602283  0.637300611  0.637998939  0.638697267
+    ## [111]  0.639395595  0.640093923  0.641490519  0.642887056  0.647076905
+    ## [116]  0.651266754  0.658249795  0.665232837  0.665931165  0.666629493
+    ## [121]  0.667327821  0.668026149  0.669422686  0.672215879  0.676405728
+    ## [126]  0.679198980  0.703639686  0.728080392  0.736460030  0.744839728
+    ## [131]  0.745544314  0.746953428  0.747658014  0.748362601  0.749067187
+    ## [136]  0.751180828  0.752589941  0.758226395  0.760340035  0.768794775
+    ## [141]  0.791340709  0.792050958  0.792761207  0.793471515  0.794892073
+    ## [146]  0.797733188  0.800574243  0.811228275  0.811938524  0.813359082
+    ## [151]  0.830405593  0.831121087  0.832551897  0.833267391  0.835413694
+    ## [156]  0.836129129  0.837559998  0.840421796  0.851153314  0.862600267
+    ## [161]  0.863320351  0.864040434  0.864760518  0.867640734  0.869080842
+    ## [166]  0.871961057  0.875561357  0.888522446  0.000000000  0.000000000
+    ## [171]  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000
+    ## [176]  0.000000000  0.000000000  0.000000000  0.000000000

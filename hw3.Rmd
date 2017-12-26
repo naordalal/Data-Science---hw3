@@ -8,7 +8,7 @@ output: github_document
 
 ```{r}
 library(igraph)
-ga.data <- read.csv('ga_edgelist.csv', header = T)
+ga.data <- read.csv('part1/ga_edgelist.csv', header = T)
 g <- graph.data.frame(ga.data,directed = F)
 plot(g)
 ```
@@ -205,8 +205,8 @@ Create file from users1Edge and users2Edge and read the file to graph
 
 ```{r}
 res <- cbind(from = users1Edge , to = users2Edge)
-write.csv(res , file = "tweets.csv" , row.names = FALSE)
-ga.data <- read.csv('tweets.csv', header = T)
+write.csv(res , file = "part2/tweets.csv" , row.names = FALSE)
+ga.data <- read.csv('part2/tweets.csv', header = T)
 g <- graph.data.frame(ga.data,directed = F)
 plot(g, vertex.size=7, vertex.label=NA, asp=FALSE)
 ```
