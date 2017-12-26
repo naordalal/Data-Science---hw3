@@ -1,0 +1,326 @@
+---
+title: "Hw3"
+author: "Naor Dalal & Koren Levenbrown"
+date: "12/26/2017"
+output: github_document
+---
+##1.A
+
+```{r}
+library(igraph)
+ga.data <- read.csv('ga_edgelist.csv', header = T)
+g <- graph.data.frame(ga.data,directed = F)
+plot(g)
+```
+
+```{r}
+gDerived <- delete.vertices(g , c('adele' , 'chief' , 'susan grey' , 'thatch grey' , 'ellis grey' , 'tucker' , 'bailey' , 'ben'))
+plot(gDerived)
+```
+
+###i. By Betweenness
+
+```{r}
+between <- betweenness(gDerived)
+between[which.max(between)]
+```
+
+###ii. By closeness
+
+```{r}
+close <- closeness(gDerived)
+close[which.max(close)]
+```
+
+###iii. By Eigenvector
+
+```{r}
+eig <- eigen_centrality(gDerived)
+eig$vector[which.max(eig$vector)]
+```
+
+
+
+##1.B
+
+###Girvan-Newman community detection
+```{r}
+gc <- edge.betweenness.community(g)
+gc
+```
+
+
+```{r}
+memb <- membership(gc)
+memb
+```
+
+Plot the graph with unique color for each community accordingly
+
+```{r}
+plot(g, vertex.size=7, #vertex.label=NA,
+     vertex.color=memb, asp=FALSE)
+```
+
+
+There is 7 communities
+
+```{r}
+length(unique(memb))
+```
+
+
+The size of each community
+
+```{r}
+t <- as.data.frame(table(memb))
+colnames(t) <- c('ID' , 'Size')
+t
+```
+
+The modularity
+
+```{r}
+gc$modularity
+```
+
+###walktrap community
+
+```{r}
+gc1 <- walktrap.community(g)
+gc1
+```
+
+
+```{r}
+memb1 <- membership(gc1)
+memb1
+```
+
+Plot the graph with unique color for each community accordingly
+
+```{r}
+plot(g, vertex.size=7, #vertex.label=NA,
+     vertex.color=memb1, asp=FALSE)
+```
+
+
+There is 7 communities
+
+```{r}
+length(unique(memb1))
+```
+
+
+The size of each community
+
+```{r}
+t1 <- as.data.frame(table(memb1))
+colnames(t1) <- c('ID' , 'Size')
+t1
+```
+
+The modularity
+
+```{r}
+gc1$modularity
+```
+
+
+
+##2
+
+```{r}
+library(igraph)
+library(twitteR)
+library(tm)
+library(httr)
+```
+
+Set twitter keys
+```{r}
+consumer_key <- "Y0NniYiJCKL7qqbrreh6p9P4F"
+consumer_secret <- "yZlDnWZEB20LrrdVPXwTIY6skmuj9N3iljcO3cGvugrwSJlhYu"
+access_token <- "945458627669786624-LsmOz4oCzo0lT6UHwSkPv6hT0inP47x"
+access_secret <- "2jwReQYUJHFTDAjQhs0y3Yt1v4MAO2zyAddddBXMVJF4N"
+```
+
+Set up the OAuth credentials for a twitteR session
+```{r}
+sig <- setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
+```
+
+##2.A
+
+###Search tweets on bitcoin on english since 01/12/2017
+
+```{r}
+tweets <- searchTwitter("#bitcoin", n=200 , lang = "en" , since = "2017-12-01")
+```
+
+convert the tweets to dataFrame
+
+```{r}
+tweetsDf <- twListToDF(tweets)
+summary(tweetsDf)
+```
+
+Get users that publish the tweets
+```{r}
+users <- twListToDF(lookupUsers(tweetsDf$screenName))
+
+```
+
+
+##2.B
+Our vertexes are user's names and the edge between two users means that their account created on the same month
+
+```{r}
+library(lubridate)
+users1Edge <- c()
+users2Edge <- c()
+
+for(i in 1:nrow(users))
+{
+  for(j in 1:nrow(users))
+  {
+    user1 <- users[i,]
+    user2 <- users[j,]
+    user1Month <- month(as.POSIXlt(user1$created, format="%d/%m/%Y"))
+    user2Month <- month(as.POSIXlt(user2$created, format="%d/%m/%Y"))
+    
+    if((user1$screenName != user2$screenName) && user1Month == user2Month)
+    {
+      users1Edge <- c(users1Edge , user1$screenName)
+      users2Edge <- c(users2Edge , user2$screenName)
+    }
+  }
+}
+
+```
+
+
+##2.C
+Create file from users1Edge and users2Edge and read the file to graph
+
+```{r}
+res <- cbind(from = users1Edge , to = users2Edge)
+write.csv(res , file = "tweets.csv" , row.names = FALSE)
+ga.data <- read.csv('tweets.csv', header = T)
+g <- graph.data.frame(ga.data,directed = F)
+plot(g, vertex.size=7, vertex.label=NA, asp=FALSE)
+```
+
+
+##2.D
+
+###1.A
+
+###i. By Betweenness
+
+```{r}
+between <- betweenness(g)
+between[which.max(between)]
+```
+
+###ii. By closeness
+
+```{r}
+close <- closeness(g)
+close[which.max(close)]
+```
+
+###iii. By Eigenvector
+
+```{r}
+eig <- eigen_centrality(g)
+eig$vector[which.max(eig$vector)]
+```
+
+
+
+###1.B
+
+###Girvan-Newman community detection
+```{r}
+gc <- edge.betweenness.community(g)
+gc
+```
+
+
+```{r}
+memb <- membership(gc)
+memb
+```
+
+Plot the graph with unique color for each community accordingly
+
+```{r}
+plot(g, vertex.size=7, #vertex.label=NA,
+     vertex.color=memb, asp=FALSE)
+```
+
+
+There is 12 communities
+
+```{r}
+length(unique(memb))
+```
+
+
+The size of each community
+
+```{r}
+t <- as.data.frame(table(memb))
+colnames(t) <- c('ID' , 'Size')
+t
+```
+
+The modularity
+
+```{r}
+gc$modularity
+```
+
+###walktrap community
+
+```{r}
+gc1 <- walktrap.community(g)
+gc1
+```
+
+
+```{r}
+memb1 <- membership(gc1)
+memb1
+```
+
+Plot the graph with unique color for each community accordingly
+
+```{r}
+plot(g, vertex.size=7, #vertex.label=NA,
+     vertex.color=memb1, asp=FALSE)
+```
+
+
+There is 12 communities
+
+```{r}
+length(unique(memb1))
+```
+
+
+The size of each community
+
+```{r}
+t1 <- as.data.frame(table(memb1))
+colnames(t1) <- c('ID' , 'Size')
+t1
+```
+
+The modularity
+
+```{r}
+gc1$modularity
+```
+
